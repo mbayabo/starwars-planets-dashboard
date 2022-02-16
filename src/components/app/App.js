@@ -78,7 +78,7 @@ function App() {
   };
 
   return (
-    <div style={{ height: 500, width: "100%", maxWidth: 1000, float: "left" }}>
+    <div style={{ height: 500, width: "100%", maxWidth: 1000}}>
       <DataGrid
         columns={columns}
         rows={rows}
