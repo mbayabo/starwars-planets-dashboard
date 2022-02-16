@@ -17,3 +17,6 @@ rules:
   "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }]
   "react/react-in-jsx-scope": 0
   "react/jsx-uses-react": 0
+  "no-unused-vars": "warn"
+  "no-undef": "warn"
+  "prefer-const": "warn"
