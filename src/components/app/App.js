@@ -1,14 +1,19 @@
 import { useEffect, useState } from "react";
 
 import { DataGrid } from "@mui/x-data-grid";
+import { Stack, Container, Divider } from "@mui/material";
 import axios from "axios";
+import Plot from "react-plotly.js";
 
 async function listPlanets(page) {
   const response = await axios.get(`https://swapi.dev/api/planets/?page=${page}`);
   const planets = response.data.results.map((planet) => ({
     id: planet.name,
     name: planet.name,
-    population: planet.population,
+    population:
+      planet.population !== "unknown"
+        ? parseInt(planet.population, 10).toLocaleString("en-US")
+        : null,
     rotationPeriod: planet.rotation_period,
     orbitalPeriod: planet.orbital_period,
     diameter: planet.diameter,
@@ -28,7 +33,7 @@ const columns = [
   {
     field: "population",
     headerName: "Population",
-    width: 155,
+    width: 135,
   },
   {
     field: "rotationPeriod",
@@ -77,24 +82,44 @@ function App() {
     setPage(newPage + 1);
   };
 
+  const getXData = () => rows.map((planet) => planet.name);
+  const getYData = (field = "population") => rows.map((planet) => planet[field]);
+
   return (
-    <div style={{ height: 500, width: "100%", maxWidth: 1000}}>
-      <DataGrid
-        columns={columns}
-        rows={rows}
-        pageSize={10}
-        pagination
-        rowCount={totalPlanets}
-        paginationMode="server"
-        onPageChange={handlePageChange}
-        loading={isLoading}
-        initialState={{
-          sorting: {
-            sortModel: [{ field: "name", sort: "asc" }],
-          },
-        }}
-      />
-    </div>
+    <Stack
+      direction={{ xs: "column", sm: "column", lg: "row" }}
+      spacing={{ sm: 0.5, lg: 2 }}
+      divider={<Divider orientation="vertical" flexItem />}
+    >
+      <Container spacing={0}>
+        <Plot
+          data={[{ x: getXData(), y: getYData(), type: "bar" }]}
+          layout={{
+            autosize: true,
+            title: "Planet vs Population",
+            xaxis: { title: "Planets", categoryorder: "category ascending" },
+            yaxis: { title: "Population" },
+          }}
+        />
+      </Container>
+      <Container style={{ height: 500 }} spacing={0}>
+        <DataGrid
+          columns={columns}
+          rows={rows}
+          pageSize={10}
+          pagination
+          rowCount={totalPlanets}
+          paginationMode="server"
+          onPageChange={handlePageChange}
+          loading={isLoading}
+          initialState={{
+            sorting: {
+              sortModel: [{ field: "name", sort: "asc" }],
+            },
+          }}
+        />
+      </Container>
+    </Stack>
   );
 }
 
