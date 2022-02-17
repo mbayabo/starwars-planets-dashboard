@@ -126,6 +126,7 @@ function App() {
           pageSize={10}
           rowCount={totalPlanets}
           paginationMode="server"
+          rowsPerPageOptions={[10]}
           onPageChange={handlePageChange}
           loading={isLoading}
           initialState={{
