@@ -220,5 +220,22 @@ describe("App", () => {
         expect(screen.getByText("Orbital Period vs Planet")).toBeInTheDocument();
       });
     });
+
+    test("Should change attributes when `Diameter` button is clicked", async () => {
+      const fakeListPlanetsResult = {
+        count: 11,
+        planets: fakePlanets,
+      };
+
+      listPlanets.mockResolvedValue(fakeListPlanetsResult);
+
+      render(<App />);
+
+      await waitFor(() => {
+        fireEvent.click(screen.getByLabelText("Diameter Tab"));
+        expect(screen.queryByText("Population vs Planet")).toBe(null);
+        expect(screen.getByText("Diameter vs Planet")).toBeInTheDocument();
+      });
+    });
   });
 });
