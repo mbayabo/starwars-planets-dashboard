@@ -51,12 +51,27 @@ const columns = [
   },
 ];
 
-const chartTitles = {
-  population: "Population",
-  rotationPeriod: "Rotation Period",
-  orbitalPeriod: "Orbital Period",
-  diameter: "Diameter",
-  surfaceWater: "Surface Water",
+const chartConfig = {
+  population: {
+    title: "Population",
+    type: "log",
+  },
+  rotationPeriod: {
+    title: "Rotation Period",
+    type: "linear",
+  },
+  orbitalPeriod: {
+    title: "Orbital Period",
+    type: "linear",
+  },
+  diameter: {
+    title: "Diameter",
+    type: "linear",
+  },
+  surfaceWater: {
+    title: "Surface Water",
+    type: "linear",
+  },
 };
 
 function App() {
@@ -111,9 +126,13 @@ function App() {
             },
           ]}
           layout={{
-            title: `Planet vs ${chartTitles[currentAttribute]}`,
+            title: `Planet vs ${chartConfig[currentAttribute].title}`,
             xaxis: { title: "Planets", categoryorder: "category ascending", automargin: true },
-            yaxis: { title: chartTitles[currentAttribute], automargin: true },
+            yaxis: {
+              title: chartConfig[currentAttribute].title,
+              automargin: true,
+              type: chartConfig[currentAttribute].type,
+            },
           }}
           config={{ displayModeBar: false }}
           style={{ width: "100%" }}
