@@ -150,22 +150,58 @@ describe("App", () => {
 
       render(<App />);
 
-      const populationTab = screen.getByLabelText("Population Tab");
-      const rotationPeriodTab = screen.getByLabelText("Rotation Period Tab");
-      const orbitalPeriodTab = screen.getByLabelText("Orbital Period Tab");
-      const diameterTab = screen.getByLabelText("Diameter Tab");
-      const surfaceWaterTab = screen.getByLabelText("Surface Water Tab");
+      await waitFor(() => {
+        // Make sure that the first page of data is loaded
+        expect(screen.getByRole("cell", { name: /Alderaan/i })).toBeInTheDocument();
+        expect(screen.queryByRole("cell", { name: /Geonosis/i })).toBe(null);
+
+        const populationTab = screen.getByLabelText("Population Tab");
+        const rotationPeriodTab = screen.getByLabelText("Rotation Period Tab");
+        const orbitalPeriodTab = screen.getByLabelText("Orbital Period Tab");
+        const diameterTab = screen.getByLabelText("Diameter Tab");
+        const surfaceWaterTab = screen.getByLabelText("Surface Water Tab");
+
+        // Make sure Population Tab is active on first load
+        expect(populationTab.classList.contains("Mui-selected")).toBe(true);
+        expect(rotationPeriodTab.classList.contains("Mui-selected")).toBe(false);
+        expect(orbitalPeriodTab.classList.contains("Mui-selected")).toBe(false);
+        expect(diameterTab.classList.contains("Mui-selected")).toBe(false);
+        expect(surfaceWaterTab.classList.contains("Mui-selected")).toBe(false);
+      });
+    });
+
+    test("Should change attributes when `Rotation Period` button is clicked", async () => {
+      const fakeListPlanetsResult = {
+        count: 11,
+        planets: fakePlanets,
+      };
+
+      listPlanets.mockResolvedValue(fakeListPlanetsResult);
+
+      render(<App />);
 
       await waitFor(() => {
-        expect(screen.getByRole("cell", { name: "Alderaan" })).toBeInTheDocument();
-        expect(screen.queryByRole("cell", { name: "Geonosis" })).toBe(null);
+        fireEvent.click(screen.getByLabelText("Rotation Period Tab"));
+        expect(screen.getByText("Rotation Period vs Planet")).toBeInTheDocument();
       });
+    });
 
-      expect(populationTab.classList.contains("Mui-selected")).toBe(true);
-      expect(rotationPeriodTab.classList.contains("Mui-selected")).toBe(false);
-      expect(orbitalPeriodTab.classList.contains("Mui-selected")).toBe(false);
-      expect(diameterTab.classList.contains("Mui-selected")).toBe(false);
-      expect(surfaceWaterTab.classList.contains("Mui-selected")).toBe(false);
+    test("Should change attributes when `Population` button is clicked", async () => {
+      const fakeListPlanetsResult = {
+        count: 11,
+        planets: fakePlanets,
+      };
+
+      listPlanets.mockResolvedValue(fakeListPlanetsResult);
+
+      render(<App />);
+
+      await waitFor(() => {
+        fireEvent.click(screen.getByLabelText("Rotation Period Tab"));
+        fireEvent.click(screen.getByLabelText("Population Tab"));
+        expect(screen.queryByText("Rotation Period vs Planet")).toBe(null);
+        expect(screen.getByText("Population vs Planet")).toBeInTheDocument();
+      });
     });
   });
 });
