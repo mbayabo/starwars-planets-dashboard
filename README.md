@@ -34,4 +34,7 @@ The attribute can be selected using the buttons on the top of the page. I've neg
 ### Types
 The Population chart is displayed in logarithmic scale. Everything else is displayed linearly.
 
+## [Demo](https://mbayabo.github.io/starwars-planets-dashboard/)
+The demo is deployed on Github pages using the `gh-pages` package.
+
  
