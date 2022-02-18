@@ -203,5 +203,22 @@ describe("App", () => {
         expect(screen.getByText("Population vs Planet")).toBeInTheDocument();
       });
     });
+
+    test("Should change attributes when `Orbital Period` button is clicked", async () => {
+      const fakeListPlanetsResult = {
+        count: 11,
+        planets: fakePlanets,
+      };
+
+      listPlanets.mockResolvedValue(fakeListPlanetsResult);
+
+      render(<App />);
+
+      await waitFor(() => {
+        fireEvent.click(screen.getByLabelText("Orbital Period Tab"));
+        expect(screen.queryByText("Population vs Planet")).toBe(null);
+        expect(screen.getByText("Orbital Period vs Planet")).toBeInTheDocument();
+      });
+    });
   });
 });
