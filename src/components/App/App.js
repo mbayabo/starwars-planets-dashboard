@@ -125,6 +125,7 @@ function App() {
               type: "bar",
             },
           ]}
+          useResizeHandler
           layout={{
             title: `Planet vs ${chartConfig[currentAttribute].title}`,
             xaxis: { title: "Planets", categoryorder: "category ascending", automargin: true },
