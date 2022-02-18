@@ -104,16 +104,40 @@ function App() {
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
         <Tabs
           value={currentAttribute}
-          aria-label="basic tabs example"
+          aria-label="Attribute Tabs"
           centered
           onChange={handleAttributeChange}
         >
-          <Tab value="population" label="Population" icon={<PeopleIcon />} />
-          <Tab value="rotationPeriod" label="Rotation Period" icon={<ThreeSixtyIcon />} />
-          <Tab value="orbitalPeriod" label="Orbital Period" icon={<PublicIcon />} />
-          <Tab value="diameter" label="Diameter" icon={<StraightenIcon />} />
-          {/* <Tab value="climate" label="Climate" /> */}
-          <Tab value="surfaceWater" label="Surface Water" icon={<WavesIcon />} />
+          <Tab
+            aria-label="Population Tab"
+            value="population"
+            label="Population"
+            icon={<PeopleIcon />}
+          />
+          <Tab
+            aria-label="Rotation Period Tab"
+            value="rotationPeriod"
+            label="Rotation Period"
+            icon={<ThreeSixtyIcon />}
+          />
+          <Tab
+            aria-label="Orbital Period Tab"
+            value="orbitalPeriod"
+            label="Orbital Period"
+            icon={<PublicIcon />}
+          />
+          <Tab
+            aria-label="Diameter Tab"
+            value="diameter"
+            label="Diameter"
+            icon={<StraightenIcon />}
+          />
+          <Tab
+            aria-label="Surface Water Tab"
+            value="surfaceWater"
+            label="Surface Water"
+            icon={<WavesIcon />}
+          />
         </Tabs>
       </Box>
       <Container spacing={0} style={{ width: "auto" }}>
@@ -127,7 +151,7 @@ function App() {
           ]}
           useResizeHandler
           layout={{
-            title: `Planet vs ${chartConfig[currentAttribute].title}`,
+            title: `${chartConfig[currentAttribute].title} vs Planet`,
             xaxis: { title: "Planets", categoryorder: "category ascending", automargin: true },
             yaxis: {
               title: chartConfig[currentAttribute].title,
