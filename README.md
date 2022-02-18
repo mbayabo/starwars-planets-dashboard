@@ -1,70 +1,37 @@
-# Getting Started with Create React App
+# Star Wars Planets Dashboard
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Task List
+ - [x] Fetch planets from SWAPI and show as a table
+ - [x] Display a bar chart of planet populations
+ - [x] Order table by planet names
+ - [x] Order chart by planet names
+ - [x] Pagination for the table
+ - [x] Ability to choose different graph attributes
+ - [x] Some testing
 
-## Available Scripts
+## Planets Table
 
-In the project directory, you can run:
+### Selecting pages
+The page can be changed using the "<" and ">" buttons on the bottom right. It also shows pagination information.
 
-### `npm start`
+### Handling Pagination
+Pagination is handled by the Star Wars API itself. Therefore, 10 planets are fetched first, then the page sorts them. This is different from fetching every planet first, sorting them, then displaying them 10 at a time.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### Why I chose to do it this way
+In big datasets (100k+ or more), fetching every planet, sorting them, then showing 10 at a time is incredibly inefficient. If I had full control of both the API and the frontend, I'd have the planets sorted by name using the API then displayed on the tables, resulting in a truly alphabetical table. Eg. `https://swapi.dev/api/planets/?page=1&ordering=name`. However, this API doesn't seem to have that feature.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### How would I do it the other way?
+I can query every planet by sending a GET request to `https://swapi.dev/api/planets/` which should give me the first page. Using the "next" key from the JSON response object, I can query the next page. I keep doing this until "next" is `null`. After I have all of the planets, I simply sort them using JavaScript. Then on the table, I display the first 10.
 
-### `npm test`
+### Alternative options
+I can also simply scrape the API first, then dump it into my own database where I'd have full control of the data.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Chart
 
-### `npm run build`
+### Chart Attribute Selection
+The attribute can be selected using the buttons on the top of the page. I've neglected to create a "Climate" chart as I don't think it really needed it.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Types
+The Population chart is displayed in logarithmic scale. Everything else is displayed linearly.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+ 
