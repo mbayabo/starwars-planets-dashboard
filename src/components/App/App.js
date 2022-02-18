@@ -81,14 +81,22 @@ function App() {
   const [totalPlanets, setTotalPlanets] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(async () => {
-    setIsLoading(true);
+  useEffect(() => {
+    let isMounted = true;
 
-    const { count, planets } = await listPlanets(page);
-    setTotalPlanets(count);
-    setRows(planets);
+    setIsLoading(true);
+    listPlanets(page).then(({ count, planets }) => {
+      if (isMounted) {
+        setTotalPlanets(count);
+        setRows(planets);
+      }
+    });
 
     setIsLoading(false);
+
+    return () => {
+      isMounted = false;
+    };
   }, [page]);
 
   const handlePageChange = (newPage) => {
