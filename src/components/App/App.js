@@ -87,7 +87,9 @@ function App() {
     setIsLoading(true);
     listPlanets(page).then(({ count, planets }) => {
       if (isMounted) {
-        setTotalPlanets(count);
+        if (totalPlanets === 0) {
+          setTotalPlanets(count);
+        }
         setRows(planets);
       }
     });
