@@ -237,5 +237,22 @@ describe("App", () => {
         expect(screen.getByText("Diameter vs Planet")).toBeInTheDocument();
       });
     });
+
+    test("Should change attributes when `Surface Water` button is clicked", async () => {
+      const fakeListPlanetsResult = {
+        count: 11,
+        planets: fakePlanets,
+      };
+
+      listPlanets.mockResolvedValue(fakeListPlanetsResult);
+
+      render(<App />);
+
+      await waitFor(() => {
+        fireEvent.click(screen.getByLabelText("Surface Water Tab"));
+        expect(screen.queryByText("Population vs Planet")).toBe(null);
+        expect(screen.getByText("Surface Water vs Planet")).toBeInTheDocument();
+      });
+    });
   });
 });
