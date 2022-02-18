@@ -12,67 +12,7 @@ import StraightenIcon from "@mui/icons-material/Straighten";
 import Plot from "react-plotly.js";
 
 import { listPlanets, listPlanetNames, listAttributeValues } from "./services";
-
-const columns = [
-  {
-    field: "name",
-    headerName: "Name",
-    minWidth: 125,
-  },
-  {
-    field: "population",
-    headerName: "Population",
-    minWidth: 135,
-  },
-  {
-    field: "rotationPeriod",
-    headerName: "Rotation Period",
-    minWidth: 130,
-  },
-  {
-    field: "orbitalPeriod",
-    headerName: "Orbital Period",
-    minWidth: 130,
-  },
-  {
-    field: "diameter",
-    headerName: "Diameter",
-    minWidth: 90,
-  },
-  {
-    field: "climate",
-    headerName: "Climate",
-    minWidth: 150,
-  },
-  {
-    field: "surfaceWater",
-    headerName: "Surface Water",
-    minWidth: 130,
-  },
-];
-
-const chartConfig = {
-  population: {
-    title: "Population",
-    type: "log",
-  },
-  rotationPeriod: {
-    title: "Rotation Period",
-    type: "linear",
-  },
-  orbitalPeriod: {
-    title: "Orbital Period",
-    type: "linear",
-  },
-  diameter: {
-    title: "Diameter",
-    type: "linear",
-  },
-  surfaceWater: {
-    title: "Surface Water",
-    type: "linear",
-  },
-};
+import { CHART_CONFIG, COLUMNS } from "./constants";
 
 function App() {
   const [rows, setRows] = useState([]);
@@ -161,12 +101,12 @@ function App() {
           ]}
           useResizeHandler
           layout={{
-            title: `${chartConfig[currentAttribute].title} vs Planet`,
+            title: `${CHART_CONFIG[currentAttribute].title} vs Planet`,
             xaxis: { title: "Planets", categoryorder: "category ascending", automargin: true },
             yaxis: {
-              title: chartConfig[currentAttribute].title,
+              title: CHART_CONFIG[currentAttribute].title,
               automargin: true,
-              type: chartConfig[currentAttribute].type,
+              type: CHART_CONFIG[currentAttribute].type,
             },
           }}
           config={{ displayModeBar: false }}
@@ -175,7 +115,7 @@ function App() {
       </Container>
       <Container style={{ width: "auto", height: 400 }} spacing={0}>
         <DataGrid
-          columns={columns}
+          columns={COLUMNS}
           rows={rows}
           pageSize={10}
           rowCount={totalPlanets}
