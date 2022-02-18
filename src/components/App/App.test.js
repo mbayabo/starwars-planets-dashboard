@@ -1,6 +1,6 @@
-import { render, fireEvent, waitFor, screen, cleanup, act } from "@testing-library/react";
+import { render, fireEvent, waitFor, screen, cleanup } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import { listPlanets, listPlanetNames, listAttributeValues } from "./services";
+import { listPlanets } from "./services";
 
 import App from "./App";
 
@@ -128,10 +128,9 @@ const fakePlanets = [
     population: "100000000000",
   },
 ];
-
-// Mock all top level functions, such as get, put, delete and post:
 jest.mock("./services");
 
+// Mock all top level functions, such as get, put, delete and post:
 describe("App", () => {
   describe("render()", () => {
     beforeEach(() => {});
@@ -140,10 +139,10 @@ describe("App", () => {
       cleanup();
     });
 
-    test("Should load the page in the population tab with cells loaded", async () => {
+    test("Should load the charts in the Population tab when first loaded", async () => {
       const fakeListPlanetsResult = {
         count: 11,
-        planets: fakePlanets,
+        planets: fakePlanets.slice(0, 10),
       };
 
       listPlanets.mockResolvedValue(fakeListPlanetsResult);
@@ -154,7 +153,9 @@ describe("App", () => {
         // Make sure that the first page of data is loaded
         expect(screen.getByRole("cell", { name: /Alderaan/i })).toBeInTheDocument();
         expect(screen.queryByRole("cell", { name: /Geonosis/i })).toBe(null);
+      });
 
+      await waitFor(() => {
         const populationTab = screen.getByLabelText("Population Tab");
         const rotationPeriodTab = screen.getByLabelText("Rotation Period Tab");
         const orbitalPeriodTab = screen.getByLabelText("Orbital Period Tab");
@@ -173,7 +174,7 @@ describe("App", () => {
     test("Should change attributes when `Rotation Period` button is clicked", async () => {
       const fakeListPlanetsResult = {
         count: 11,
-        planets: fakePlanets,
+        planets: fakePlanets.slice(0, 10),
       };
 
       listPlanets.mockResolvedValue(fakeListPlanetsResult);
@@ -189,7 +190,7 @@ describe("App", () => {
     test("Should change attributes when `Population` button is clicked", async () => {
       const fakeListPlanetsResult = {
         count: 11,
-        planets: fakePlanets,
+        planets: fakePlanets.slice(0, 10),
       };
 
       listPlanets.mockResolvedValue(fakeListPlanetsResult);
@@ -207,7 +208,7 @@ describe("App", () => {
     test("Should change attributes when `Orbital Period` button is clicked", async () => {
       const fakeListPlanetsResult = {
         count: 11,
-        planets: fakePlanets,
+        planets: fakePlanets.slice(0, 10),
       };
 
       listPlanets.mockResolvedValue(fakeListPlanetsResult);
@@ -224,7 +225,7 @@ describe("App", () => {
     test("Should change attributes when `Diameter` button is clicked", async () => {
       const fakeListPlanetsResult = {
         count: 11,
-        planets: fakePlanets,
+        planets: fakePlanets.slice(0, 10),
       };
 
       listPlanets.mockResolvedValue(fakeListPlanetsResult);
@@ -241,7 +242,7 @@ describe("App", () => {
     test("Should change attributes when `Surface Water` button is clicked", async () => {
       const fakeListPlanetsResult = {
         count: 11,
-        planets: fakePlanets,
+        planets: fakePlanets.slice(0, 10),
       };
 
       listPlanets.mockResolvedValue(fakeListPlanetsResult);
@@ -252,6 +253,23 @@ describe("App", () => {
         fireEvent.click(screen.getByLabelText("Surface Water Tab"));
         expect(screen.queryByText("Population vs Planet")).toBe(null);
         expect(screen.getByText("Surface Water vs Planet")).toBeInTheDocument();
+      });
+    });
+
+    test("Should change pages when clicking the > (Go to next page) button", async () => {
+      const fakeListPlanetsResult = {
+        count: 11,
+        planets: fakePlanets.slice(10),
+      };
+
+      listPlanets.mockResolvedValue(fakeListPlanetsResult);
+
+      render(<App />);
+
+      await waitFor(() => {
+        fireEvent.click(screen.getByRole("button", { name: /Go to next page/i }));
+        expect(screen.queryByRole("cell", { name: /Alderaan/i })).toBe(null);
+        expect(screen.getByRole("cell", { name: /Geonosis/i })).toBeInTheDocument(null);
       });
     });
   });
