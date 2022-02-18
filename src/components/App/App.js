@@ -11,7 +11,7 @@ import StraightenIcon from "@mui/icons-material/Straighten";
 
 import Plot from "react-plotly.js";
 
-import { listPlanets, listPlanetNames, listAttributeValues } from "./utils";
+import { listPlanets, listPlanetNames, listAttributeValues } from "./services";
 
 const columns = [
   {
