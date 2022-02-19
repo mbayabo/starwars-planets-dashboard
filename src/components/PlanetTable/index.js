@@ -30,7 +30,7 @@ function PlanetTable(props) {
 PlanetTable.propTypes = {
   totalPlanets: PropTypes.number.isRequired,
   rows: PropTypes.arrayOf(PropTypes.any).isRequired,
-  columns: PropTypes.arrayOf(PropTypes.string).isRequired,
+  columns: PropTypes.arrayOf(PropTypes.object).isRequired,
   onPageChange: PropTypes.func.isRequired,
   isLoading: PropTypes.bool.isRequired,
 };
