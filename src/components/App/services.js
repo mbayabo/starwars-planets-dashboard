@@ -1,16 +1,21 @@
 import axios from "axios";
 
 /**
+ * Convets numbers as strings into integers if the string isn't "unknown"
+ * @param {string} value The string to be converted into a number
+ * @returns An integer or null
+ */
+function convertToNumber(value) {
+  return value !== "unknown" ? parseInt(value, 10) : null;
+}
+
+/**
  * Acquires a list of planets and their details from the Star Wars API
  *
  * @param {number} page The page number for acquiring the list of planets
  * @returns An object containing the total number of planets and a list of
  *  planets and their attributes
  */
-function convertToNumber(value) {
-  return value !== "unknown" ? parseInt(value, 10) : null;
-}
-
 export async function listPlanets(page) {
   const response = await axios.get(`https://swapi.dev/api/planets/?page=${page}`);
   const planets = response.data.results.map((planet) => ({
