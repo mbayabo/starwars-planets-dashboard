@@ -7,17 +7,21 @@ import axios from "axios";
  * @returns An object containing the total number of planets and a list of
  *  planets and their attributes
  */
+function convertToNumber(value) {
+  return value !== "unknown" ? parseInt(value, 10) : null;
+}
+
 export async function listPlanets(page) {
   const response = await axios.get(`https://swapi.dev/api/planets/?page=${page}`);
   const planets = response.data.results.map((planet) => ({
     id: planet.name,
     name: planet.name,
-    population: planet.population,
-    rotationPeriod: planet.rotation_period,
-    orbitalPeriod: planet.orbital_period,
-    diameter: planet.diameter,
+    population: convertToNumber(planet.population),
+    rotationPeriod: convertToNumber(planet.rotation_period),
+    orbitalPeriod: convertToNumber(planet.orbital_period),
+    diameter: convertToNumber(planet.diameter),
     climate: planet.climate,
-    surfaceWater: planet.surface_water,
+    surfaceWater: convertToNumber(planet.surface_water),
   }));
   const { count } = response.data;
   return { count, planets };
