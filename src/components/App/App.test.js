@@ -130,7 +130,6 @@ const fakePlanets = [
 ];
 jest.mock("./services");
 
-// Mock all top level functions, such as get, put, delete and post:
 describe("App", () => {
   describe("render()", () => {
     beforeEach(() => {});
