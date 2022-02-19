@@ -2,7 +2,7 @@ import { render, fireEvent, waitFor, screen, cleanup } from "@testing-library/re
 import "@testing-library/jest-dom";
 import { listPlanets } from "./services";
 
-import App from "./App";
+import App from ".";
 
 const fakePlanets = [
   {
