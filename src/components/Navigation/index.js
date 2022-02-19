@@ -1,5 +1,5 @@
-import { Tabs, Tab } from "@mui/material";
-import Box from "@mui/material/Box";
+import { Tabs, Tab, Container } from "@mui/material";
+// import Box from "@mui/material/Box";
 import PeopleIcon from "@mui/icons-material/People";
 import ThreeSixtyIcon from "@mui/icons-material/ThreeSixty";
 import PublicIcon from "@mui/icons-material/Public";
@@ -12,11 +12,10 @@ function Navigation(props) {
   const { currentAttribute, onTabChange } = props;
 
   return (
-    <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+    <Container sx={{ borderBottom: 1, borderColor: "divider" }}>
       <Tabs
         value={currentAttribute}
         aria-label="Attribute Tabs"
-        centered
         onChange={onTabChange}
         variant="scrollable"
       >
