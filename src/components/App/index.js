@@ -1,8 +1,5 @@
 import { useEffect, useState } from "react";
 
-// import { DataGrid } from "@mui/x-data-grid";
-// import { Container } from "@mui/material";
-
 import { listPlanets, listPlanetNames, listAttributeValues } from "./services";
 import { CHART_CONFIG, COLUMNS } from "./constants";
 
@@ -46,7 +43,7 @@ function App() {
 
   return (
     <>
-      <Navigation currentAttribute={currentAttribute} onChange={handleAttributeChange} />
+      <Navigation currentAttribute={currentAttribute} onTabChange={handleAttributeChange} />
       <PlanetChart
         xAxisData={listPlanetNames(rows)}
         yAxisData={listAttributeValues(rows, currentAttribute)}

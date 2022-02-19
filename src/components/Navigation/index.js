@@ -9,7 +9,7 @@ import StraightenIcon from "@mui/icons-material/Straighten";
 import PropTypes from "prop-types";
 
 function Navigation(props) {
-  const { currentAttribute, onChange } = props;
+  const { currentAttribute, onTabChange } = props;
 
   return (
     <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
@@ -17,7 +17,8 @@ function Navigation(props) {
         value={currentAttribute}
         aria-label="Attribute Tabs"
         centered
-        onChange={onChange}
+        onChange={onTabChange}
+        variant="scrollable"
       >
         <Tab
           aria-label="Population Tab"
@@ -50,13 +51,13 @@ function Navigation(props) {
           icon={<WavesIcon />}
         />
       </Tabs>
-    </Box>
+    </Container>
   );
 }
 
 Navigation.propTypes = {
   currentAttribute: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
+  onTabChange: PropTypes.func.isRequired,
 };
 
 export default Navigation;
