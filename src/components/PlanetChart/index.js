@@ -34,13 +34,22 @@ function PlanetChart(props) {
   );
 }
 
+PlanetChart.defaultProps = {
+  xAxisData: [],
+  yAxisData: [],
+  chartTitle: "",
+  xAxisTitle: "",
+  yAxisTitle: "",
+  yAxisScale: "linear",
+}
+
 PlanetChart.propTypes = {
-  xAxisData: PropTypes.arrayOf(PropTypes.string).isRequired,
-  yAxisData: PropTypes.arrayOf(PropTypes.any).isRequired,
-  chartTitle: PropTypes.string.isRequired,
-  xAxisTitle: PropTypes.string.isRequired,
-  yAxisTitle: PropTypes.string.isRequired,
-  yAxisScale: PropTypes.string.isRequired,
+  xAxisData: PropTypes.arrayOf(PropTypes.string),
+  yAxisData: PropTypes.arrayOf(PropTypes.any),
+  chartTitle: PropTypes.string,
+  xAxisTitle: PropTypes.string,
+  yAxisTitle: PropTypes.string,
+  yAxisScale: PropTypes.string,
 };
 
 export default PlanetChart;
