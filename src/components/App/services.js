@@ -19,28 +19,23 @@ function convertToNumber(value) {
 export async function listPlanets(page) {
   let count = 0;
   let planets = [];
-  try {
-    // const response = await axios.get(`https://swapi.dev/api/planets/?page=${page}`, {
-    //   timeout: 1000,
-    // });
-    const response = await axios.get(`https://swapi.py4e.com/api/planets/?page=${page}`, {
-      timeout: 1000,
-    });
-    planets = response.data.results.map((planet) => ({
-      id: planet.name,
-      name: planet.name,
-      population: convertToNumber(planet.population),
-      rotationPeriod: convertToNumber(planet.rotation_period),
-      orbitalPeriod: convertToNumber(planet.orbital_period),
-      diameter: convertToNumber(planet.diameter),
-      climate: planet.climate,
-      surfaceWater: convertToNumber(planet.surface_water),
-    }));
-    count = response.data.count;
-  } catch (err) {
-    console.log(err);
-    console.log("The Star Wars API could not be reached.");
-  }
+  const response = await axios.get(`https://swapi.dev/api/planets/?page=${page}`, {
+    timeout: 1000,
+  });
+  // const response = await axios.get(`https://swapi.py4e.com/api/planets/?page=${page}`, {
+  //   timeout: 1000,
+  // });
+  planets = response.data.results.map((planet) => ({
+    id: planet.name,
+    name: planet.name,
+    population: convertToNumber(planet.population),
+    rotationPeriod: convertToNumber(planet.rotation_period),
+    orbitalPeriod: convertToNumber(planet.orbital_period),
+    diameter: convertToNumber(planet.diameter),
+    climate: planet.climate,
+    surfaceWater: convertToNumber(planet.surface_water),
+  }));
+  count = response.data.count;
   return { count, planets };
 }
 
