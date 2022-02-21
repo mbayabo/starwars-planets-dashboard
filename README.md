@@ -27,6 +27,9 @@ I can query every planet by sending a GET request to `https://swapi.dev/api/plan
 1. Server-size sorting (My preferred solution)
 2. I can also simply scrape the API first, then dump it into a database where I'd have full control of the data.
 
+### Handling "unknown" values in the table
+Values that are "unknown" are set as `null` except for "climate".
+
 ## Chart
 
 ### Chart Attribute Selection
